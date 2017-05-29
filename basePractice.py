@@ -32,8 +32,9 @@ with graph.as_default():
 
 
     with tf.name_scope("global_ops"):
-        init = tf.initialize_all_variables()
+        init = tf.global_variables_initializer()
         merged_summaries = tf.summary.merge_all()
+
 
 
 sess = tf.Session(graph=graph)
