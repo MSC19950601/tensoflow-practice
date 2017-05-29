@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+import os
 # initialize variables/model parameters
 # todo
 
@@ -41,6 +41,13 @@ with tf.Session() as sess:
 
     coord = tf.train.Coordinator()
     threads = tf.train.start_queue_runners(sess=sess, coord=coord)
+
+    # check point
+    initial_step = 0
+    ckpt = tf.train.get_checkpoint_state(os.path.dirname(__file__))
+    if ckpt and ckpt.model_checkpoint_path:
+        saver.restore(sess,ckpt.model_checkpoint_path)
+        initial_step = int(ckpt.model_checkpoint_path.rsplit("-", 1)[1])
 
     train_steps = 1000
     for step in range(train_steps):
